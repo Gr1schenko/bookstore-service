@@ -40,5 +40,4 @@ public class Customer {
     @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
-
 }

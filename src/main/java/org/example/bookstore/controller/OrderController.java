@@ -1,6 +1,5 @@
 package org.example.bookstore.controller;
 
-
 import org.example.bookstore.entity.Order;
 import org.example.bookstore.repository.OrderRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public Iterable<Order> getAll() {
+    public Iterable<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 }

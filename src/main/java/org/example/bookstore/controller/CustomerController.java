@@ -17,7 +17,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public Iterable<Customer> getCustomers() {
+    public Iterable<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 }
