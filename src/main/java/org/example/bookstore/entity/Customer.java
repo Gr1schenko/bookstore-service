@@ -1,11 +1,11 @@
 package org.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -37,7 +37,7 @@ public class Customer {
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Order> orders = new LinkedHashSet<>();
 }

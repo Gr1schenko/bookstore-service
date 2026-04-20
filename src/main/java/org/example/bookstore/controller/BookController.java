@@ -1,23 +1,25 @@
 package org.example.bookstore.controller;
 
-import org.example.bookstore.entity.Book;
-import org.example.bookstore.repository.BookRepository;
+import org.example.bookstore.dto.BookDto;
+import org.example.bookstore.service.BookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping
-    public Iterable<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookDto> getAllBooks() {
+        return bookService.findAllBooks();
     }
 }

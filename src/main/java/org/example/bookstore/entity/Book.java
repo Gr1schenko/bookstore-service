@@ -1,11 +1,11 @@
 package org.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -55,7 +55,7 @@ public class Book {
     @Column(length = 1000)
     private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "book")
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
 }
