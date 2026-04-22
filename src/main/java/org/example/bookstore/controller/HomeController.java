@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-
     @GetMapping("/")
     public String home() {
         return """
@@ -15,6 +14,7 @@ public class HomeController {
                 <ul>
                 <li><a href="/api/books">/api/books</a> — список книг</li>
                 <li><a href="/api/customers">/api/customers</a> — список клиентов</li>
+                <li><a href="/api/customers/with-orders">/api/customers/with-orders</a> — список клиентов с их заказами</li>
                 <li><a href="/api/orders">/api/orders</a> — список заказов</li>
                 </ul>
                 </body>

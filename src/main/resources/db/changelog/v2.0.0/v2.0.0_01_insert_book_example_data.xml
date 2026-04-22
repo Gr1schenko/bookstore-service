@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="v2.0.0-01" author="Yuliya Grischenko">
+        <loadUpdateData
+                separator=";"
+                tableName="book"
+                file="db/changelog/v2.0.0/data/v2.0.0_01_add_book_example_data.csv"
+                primaryKey="id"/>
+    </changeSet>
+</databaseChangeLog>

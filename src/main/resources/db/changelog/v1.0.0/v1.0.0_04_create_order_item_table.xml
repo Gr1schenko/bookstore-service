@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="v1.0.0-04" author="Yuliya Grischenko">
+        <createTable tableName="order_item">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_order_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="book_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="INT">
+                <constraints nullable="false" checkConstraint="quantity > 0"/>
+            </column>
+            <column name="price_at_order" type="NUMERIC(10,2)">
+                <constraints nullable="false" checkConstraint="price_at_order >= 0"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="order_item"
+                baseColumnNames="customer_order_id"
+                referencedTableName="customer_order"
+                referencedColumnNames="id"
+                constraintName="fk_item_order"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="order_item"
+                baseColumnNames="book_id"
+                referencedTableName="book"
+                referencedColumnNames="id"
+                constraintName="fk_item_book"/>
+    </changeSet>
+</databaseChangeLog>

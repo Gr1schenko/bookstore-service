@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="v1.0.0-01" author="Yuliya Grischenko">
+        <createTable tableName="book">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="isbn" type="VARCHAR(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="title" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_middle_name" type="VARCHAR(100)"/>
+            <column name="publisher" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="publication_year" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pages" type="INT">
+                <constraints nullable="false" checkConstraint="pages > 0"/>
+            </column>
+            <column name="genre" type="VARCHAR(100)"/>
+            <column name="price" type="NUMERIC(10,2)">
+                <constraints nullable="false" checkConstraint="price >= 0"/>
+            </column>
+            <column name="stock" type="INT">
+                <constraints nullable="false" checkConstraint="stock >= 0"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)"/>
+        </createTable>
+
+        <addDefaultValue tableName="book" columnName="stock" defaultValue="0"/>
+    </changeSet>
+</databaseChangeLog>

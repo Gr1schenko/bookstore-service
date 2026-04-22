@@ -1,20 +1,25 @@
 package org.example.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,19 +30,19 @@ public class Book {
     @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(name = "author_first_name", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String authorFirstName;
 
-    @Column(name = "author_last_name", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String authorLastName;
 
-    @Column(name = "author_middle_name", length = 100)
+    @Column(length = 100)
     private String authorMiddleName;
 
     @Column(nullable = false, length = 200)
     private String publisher;
 
-    @Column(name = "publication_year", nullable = false)
+    @Column(nullable = false)
     private Integer publicationYear;
 
     @Column(nullable = false)
@@ -54,8 +59,4 @@ public class Book {
 
     @Column(length = 1000)
     private String description;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "book")
-    private List<OrderItem> orderItems;
 }
