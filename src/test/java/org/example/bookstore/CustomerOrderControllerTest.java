@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,9 +37,10 @@ class CustomerOrderControllerTest {
 
         when(orderService.getAllCustomerOrders()).thenReturn(List.of(dto));
 
-        List<CustomerOrderDto> result = controller.getAllCustomerOrders();
+        ResponseEntity<List<CustomerOrderDto>> response = controller.getAllCustomerOrders();
 
-        assertEquals(1, result.size());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(1, response.getBody().size());
 
         verify(orderService).getAllCustomerOrders();
     }
@@ -58,11 +60,11 @@ class CustomerOrderControllerTest {
 
         when(orderService.createCustomerOrder(any(CreateCustomerOrderDto.class))).thenReturn(expectedResponse);
 
-        CustomerOrderDto result = controller.createCustomerOrder(request);
+        ResponseEntity<CustomerOrderDto> response = controller.createCustomerOrder(request);
 
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals(BigDecimal.valueOf(200), result.getTotalAmount());
+        assertNotNull(response.getBody());
+        assertEquals(1L, response.getBody().getId());
+        assertEquals(BigDecimal.valueOf(200), response.getBody().getTotalAmount());
 
         verify(orderService, times(1)).createCustomerOrder(any(CreateCustomerOrderDto.class));
     }

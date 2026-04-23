@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -32,23 +33,25 @@ class CustomerControllerTest {
 
         when(customerService.getAllCustomers()).thenReturn(List.of(dto));
 
-        List<CustomerDto> result = customerController.getAllCustomers();
+        ResponseEntity<List<CustomerDto>> response = customerController.getAllCustomers();
 
-        assertEquals(1, result.size());
-        assertEquals("John", result.getFirst().getFirstName());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(1, response.getBody().size());
+        assertEquals("John", response.getBody().getFirst().getFirstName());
 
         verify(customerService).getAllCustomers();
     }
 
     @Test
     void getAllCustomersWithOrders_shouldReturnList() {
-        CustomerWithOrders response = new CustomerWithOrders();
+        CustomerWithOrders responseDto = new CustomerWithOrders();
 
-        when(customerService.getAllCustomersWithOrders()).thenReturn(List.of(response));
+        when(customerService.getAllCustomersWithOrders()).thenReturn(List.of(responseDto));
 
-        List<CustomerWithOrders> result = customerController.getAllCustomersWithOrders();
+        ResponseEntity<List<CustomerWithOrders>> response = customerController.getAllCustomersWithOrders();
 
-        assertEquals(1, result.size());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(1, response.getBody().size());
 
         verify(customerService).getAllCustomersWithOrders();
     }

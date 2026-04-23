@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -34,10 +35,11 @@ class BookControllerTest {
 
         when(bookService.getAllBooks()).thenReturn(List.of(dto));
 
-        List<BookDto> result = bookController.getAllBooks();
+        ResponseEntity<List<BookDto>> response = bookController.getAllBooks();
 
-        assertEquals(1, result.size());
-        assertEquals("Test Book", result.getFirst().getTitle());
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Test Book", response.getBody().getFirst().getTitle());
 
         verify(bookService, times(1)).getAllBooks();
     }
