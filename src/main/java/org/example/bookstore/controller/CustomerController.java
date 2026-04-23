@@ -1,23 +1,35 @@
 package org.example.bookstore.controller;
 
-import org.example.bookstore.entity.Customer;
-import org.example.bookstore.repository.CustomerRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.bookstore.api.CustomerApi;
+import org.example.bookstore.dto.response.CustomerDto;
+import org.example.bookstore.dto.response.CustomerWithOrders;
+import org.example.bookstore.service.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@Slf4j
 @RestController
-@RequestMapping("/api/customers")
-public class CustomerController {
+@RequiredArgsConstructor
+public class CustomerController implements CustomerApi {
+    private final CustomerService customerService;
 
-    private final CustomerRepository customerRepository;
-
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    @Override
+    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+        log.info("getAllCustomers() - start");
+        List<CustomerDto> result = customerService.getAllCustomers();
+        log.info("getAllCustomers() - end, count: {}", result.size());
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping
-    public Iterable<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    @Override
+    public ResponseEntity<List<CustomerWithOrders>> getAllCustomersWithOrders() {
+        log.info("getAllCustomersWithOrders() - start");
+        List<CustomerWithOrders> result = customerService.getAllCustomersWithOrders();
+        log.info("getAllCustomersWithOrders() - end, count: {}", result.size());
+        return ResponseEntity.ok(result);
     }
 }

@@ -1,23 +1,26 @@
 package org.example.bookstore.controller;
 
-import org.example.bookstore.entity.Book;
-import org.example.bookstore.repository.BookRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.bookstore.api.BookApi;
+import org.example.bookstore.dto.response.BookDto;
+import org.example.bookstore.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@Slf4j
 @RestController
-@RequestMapping("/api/books")
-public class BookController {
+@RequiredArgsConstructor
+public class BookController implements BookApi {
+    private final BookService bookService;
 
-    private final BookRepository bookRepository;
-
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
-
-    @GetMapping
-    public Iterable<Book> getAllBooks() {
-        return bookRepository.findAll();
+    @Override
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+        log.info("getAllBooks() - start");
+        List<BookDto> result = bookService.getAllBooks();
+        log.info("getAllBooks() - end, count: {}", result.size());
+        return ResponseEntity.ok(result);
     }
 }
